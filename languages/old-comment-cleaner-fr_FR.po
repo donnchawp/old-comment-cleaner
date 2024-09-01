@@ -1,0 +1,132 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Old Comment Cleaner\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-09-01 18:00+0000\n"
+"PO-Revision-Date: 2024-09-01 18:13+0000\n"
+"Last-Translator: Sebastien Serre\n"
+"Language-Team: Français\n"
+"Language: fr_FR\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.11; wp-6.6.1\n"
+"X-Domain: old-comment-cleaner"
+
+#: old-comment-cleaner.php:56
+msgid ""
+"After you check the \"Confirm Deletion\" checkbox, the plugin will become "
+"destructive and start cleaning comments the next time the scheduled cleaning "
+"operation runs. This also applies to the \"Delete Now\" button."
+msgstr ""
+"Après avoir coché la case « Confirmer la suppression », le plugin deviendra "
+"destructeur et commencera à nettoyer les commentaires lors de la prochaine "
+"opération de nettoyage programmée. Ceci s'applique également au bouton « "
+"Supprimer maintenant »."
+
+#: old-comment-cleaner.php:108 old-comment-cleaner.php:147
+#: old-comment-cleaner.php:164
+msgid "Anonymous Guest"
+msgstr "Invité anonyme"
+
+#: old-comment-cleaner.php:220
+msgid "Comments will be updated when the scheduled job runs."
+msgstr ""
+"Les commentaires seront mis à jour. Veuillez sélectionner la case à cocher "
+"de confirmation pour les autoriser."
+
+#: old-comment-cleaner.php:221
+msgid ""
+"Comments will not be updated. Please check the confirmation checkbox to "
+"allow updates."
+msgstr ""
+"Les commentaires ne seront pas mis à jour. Veuillez cocher la case à cocher "
+"de confirmation pour l’autoriser."
+
+#: old-comment-cleaner.php:79
+msgid "Confirm Deletion"
+msgstr "Confirmer la suppression"
+
+#: old-comment-cleaner.php:63
+msgid "Delete comments older than (days)"
+msgstr "Supprimer les commentaires vieux de plus de (jours)"
+
+#: old-comment-cleaner.php:67
+msgid "Delete email addresses"
+msgstr "Supprimer les adresses e-mail."
+
+#: old-comment-cleaner.php:71
+msgid "Delete names"
+msgstr "Supprimer les noms"
+
+#: old-comment-cleaner.php:88
+msgid "Delete Now"
+msgstr "Supprimer maintenant"
+
+#: old-comment-cleaner.php:75
+msgid "Delete website URLs"
+msgstr "Supprimer les URLs de sites web."
+
+#. Description of the plugin
+msgid "Deletes old comment data based on user-defined settings."
+msgstr ""
+"Supprimer les vielles données de commentaires basé sur les réglages de "
+"l’utilisateur."
+
+#. Author of the plugin
+msgid "Donncha O Caoimh"
+msgstr "Donncha O Caoimh"
+
+#. URI of the plugin
+msgid "https://odd.blog/old-comment-cleaner/"
+msgstr "https://odd.blog/old-comment-cleaner/"
+
+#: old-comment-cleaner.php:231
+#, php-format
+msgid "Next scheduled cleaning operation: %s"
+msgstr "Prochaine opération de nettoyage : %s"
+
+#: old-comment-cleaner.php:195
+msgid "Nonce verification failed."
+msgstr "La vérification du nonce a echoué."
+
+#: old-comment-cleaner.php:111
+msgid "Number of comments to be updated: %d"
+msgstr "Nombre de commentaires à mettre à jour: %d"
+
+#. Name of the plugin
+#: old-comment-cleaner.php:32
+msgid "Old Comment Cleaner"
+msgstr "Old Comment Cleaner"
+
+#: old-comment-cleaner.php:31 old-comment-cleaner.php:50
+msgid "Old Comment Cleaner Settings"
+msgstr "Régmages de Old Comment Cleaner"
+
+#: old-comment-cleaner.php:238
+msgid "Old comments are being processed."
+msgstr "Les vieux commentaires ont été traités."
+
+#: old-comment-cleaner.php:53
+msgid ""
+"Please be sure to backup your comments before running the cleanup as this "
+"cannot be undone."
+msgstr ""
+"Veillez à sauvegarder vos commentaires avant d'effectuer le nettoyage, car "
+"celui-ci ne peut être annulé."
+
+#: old-comment-cleaner.php:52
+msgid ""
+"This plugin will clean up comments older than the specified number of days. "
+"It will update email addresses, names, and website URLs in those comments. "
+"It will not delete them."
+msgstr ""
+"Cette extension nettoie les commentaires datant de plus d'un certain nombre "
+"de jours. Il met à jour les adresses électroniques, les noms et les URL des "
+"sites web dans ces commentaires. Il ne les supprimera pas."
+
+#: old-comment-cleaner.php:190
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Vous n’avez pas le droit d’accéder à cette page."

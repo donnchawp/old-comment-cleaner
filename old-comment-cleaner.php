@@ -5,6 +5,8 @@ Plugin URI: https://odd.blog/old-comment-cleaner/
 Description: Deletes old comment data based on user-defined settings.
 Version: 1.0
 Author: Donncha O Caoimh
+Text Domain: old-comment-cleaner
+Domain Path: /languages
 */
 
 // Prevent direct access to the plugin file
@@ -22,7 +24,12 @@ class Old_Comment_Cleaner {
 		add_action( 'admin_post_occ_delete_now', array( $this, 'schedule_delete_now' ) );
 		add_action( 'admin_notices', array( $this, 'show_next_scheduled_delete' ) );
 		add_action( 'load-settings_page_old-comment-cleaner', array( $this, 'check_and_schedule_event' ) );
+        add_action( 'init', array( $this, 'load_textdomain' ) );
 	}
+
+    public function load_textdomain(){
+	    load_plugin_textdomain( 'old-comment-cleaner', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+    }
 
 	public function add_settings_page() {
 		add_options_page(
