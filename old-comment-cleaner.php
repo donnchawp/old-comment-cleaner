@@ -46,6 +46,13 @@ class Old_Comment_Cleaner {
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Old Comment Cleaner Settings', 'old-comment-cleaner' ); ?></h1>
+			<p>
+				<?php esc_html_e( 'This plugin will clean up comments older than the specified number of days. It will update email addresses, names, and website URLs in those comments. It will not delete them.', 'old-comment-cleaner' ); ?>
+				<?php esc_html_e( 'Please be sure to backup your comments before running the cleanup as this cannot be undone.', 'old-comment-cleaner' ); ?>
+			</p>
+			<p>
+				<?php esc_html_e( 'After you check the "Confirm Deletion" checkbox, the plugin will become destructive and start cleaning comments the next time the scheduled cleaning operation runs. This also applies to the "Delete Now" button.', 'old-comment-cleaner' ); ?>
+			</p>
 			<form method="post" action="options.php">
 				<?php settings_fields( 'occ_settings' ); ?>
 				<?php do_settings_sections( 'occ_settings' ); ?>
@@ -72,16 +79,35 @@ class Old_Comment_Cleaner {
 					</tr>
 				</table>
 				<?php submit_button(); ?>
-				
 			</form>
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 				<input type="hidden" name="action" value="occ_delete_now">
 				<?php wp_nonce_field( 'occ_delete_now_action', 'occ_delete_now_nonce' ); ?>
 				<?php submit_button( esc_html__( 'Delete Now', 'old-comment-cleaner' ), 'secondary' ); ?>
 			</form>
-			
+			<?php $this->display_affected_comments_count(); ?>
 		</div>
 		<?php
+	}
+
+	private function display_affected_comments_count() {
+		global $wpdb;
+		$days_old = get_option( 'occ_days_old', 0 );
+		if ( $days_old > 0 ) {
+			$cutoff_date = date( 'Y-m-d H:i:s', strtotime( "-$days_old days" ) );
+			$count = $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT COUNT(*) FROM {$wpdb->comments}
+					WHERE comment_date < %s
+					AND comment_author_email != %s
+					AND comment_author != %s",
+					$cutoff_date,
+					'example@example.com',
+					sanitize_text_field( __( 'Anonymous Guest', 'old-comment-cleaner' ) )
+				)
+			);
+			echo '<p>' . sprintf( esc_html__( 'Number of comments to be updated: %d', 'old-comment-cleaner' ), esc_html( $count ) ) . '</p>';
+		}
 	}
 
 	public function delete_old_comments() {
