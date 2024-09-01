@@ -143,9 +143,6 @@ class Old_Comment_Cleaner {
 				}
 
 				if ( ! empty( $update_data ) ) {
-					error_log( $c . ' - update_data for comment ID ' . $comment->comment_ID . ' at ' . $comment->comment_date );
-					
-					/*
 					$wpdb->update(
 						$wpdb->comments,
 						$update_data,
@@ -153,7 +150,6 @@ class Old_Comment_Cleaner {
 						$update_format,
 						array( '%d' )
 					);
-					*/
 				}
 			}
 
