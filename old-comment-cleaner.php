@@ -137,12 +137,8 @@ class Old_Comment_Cleaner {
 				$wpdb->prepare(
 					"SELECT * FROM {$wpdb->comments} 
 					WHERE comment_date < %s 
-					AND comment_author_email != %s
-					AND comment_author != %s
 					LIMIT %d OFFSET %d",
 					$cutoff_date,
-					'example@example.com',
-					sanitize_text_field( __( 'Anonymous Guest', 'old-comment-cleaner' ) ),
 					$batch_size,
 					$offset
 				)
