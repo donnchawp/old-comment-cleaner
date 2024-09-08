@@ -3,10 +3,12 @@
 Plugin Name: Old Comment Cleaner
 Plugin URI: https://odd.blog/old-comment-cleaner/
 Description: Deletes old comment data based on user-defined settings.
-Version: 1.0
+Version: 1.1
 Author: Donncha O Caoimh
 Text Domain: old-comment-cleaner
 Domain Path: /languages
+License: GPL-2.0+
+License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 */
 
 // Prevent direct access to the plugin file

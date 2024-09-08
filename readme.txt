@@ -3,7 +3,7 @@ Contributors: donncha
 Tags: comments, cleaner, delete, old comments, privacy
 Requires at least: 5.0
 Tested up to: 6.6.1
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,13 +31,18 @@ You can delete old comments immediately by clicking the "Delete Now" button on t
 
 == Changelog ==
 
+= 1.1 =
+* Use WP API instead of SQL
+* gmdate instead of date
+* Other bug fixes.
+
 = 1.0 =
 * Initial release.
 
 == Upgrade Notice ==
 
-= 1.0 =
-* Initial release.
+= 1.1 =
+* Bug fixes
 
 == License ==
 
