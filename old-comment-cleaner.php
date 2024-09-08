@@ -98,21 +98,24 @@ class Old_Comment_Cleaner {
 	}
 
 	private function display_affected_comments_count() {
-		global $wpdb;
 		$days_old = get_option( 'occ_days_old', 0 );
 		if ( $days_old > 0 ) {
-			$cutoff_date = date( 'Y-m-d H:i:s', strtotime( "-$days_old days" ) );
-			$count = $wpdb->get_var(
-				$wpdb->prepare(
-					"SELECT COUNT(*) FROM {$wpdb->comments}
-					WHERE comment_date < %s
-					AND comment_author_email != %s
-					AND comment_author != %s",
-					$cutoff_date,
-					'example@example.com',
-					sanitize_text_field( __( 'Anonymous Guest', 'old-comment-cleaner' ) )
-				)
+			$cutoff_date = gmdate( 'Y-m-d H:i:s', strtotime( "-$days_old days" ) );
+			$args = array(
+				'date_query' => array(
+					array(
+						'before' => $cutoff_date,
+						'inclusive' => false,
+					),
+				),
+				'author_email__not_in' => array( 'example@example.com' ),
+				'count' => true,
 			);
+
+			$comment_query = new WP_Comment_Query();
+			$count = $comment_query->query( $args );
+
+			/* translators: %d: number of comments to be updated */
 			echo '<p>' . sprintf( esc_html__( 'Number of comments to be updated: %d', 'old-comment-cleaner' ), esc_html( $count ) ) . '</p>';
 		}
 	}
@@ -135,50 +138,44 @@ class Old_Comment_Cleaner {
 			return;
 		}
 
-		$cutoff_date = date( 'Y-m-d H:i:s', strtotime( "-$days_old days" ) );
+		$cutoff_date = gmdate( 'Y-m-d H:i:s', strtotime( "-$days_old days" ) );
 		$batch_size = 100;
 		$offset = 0;
-		$c = 0;
 		do {
-			$comments = $wpdb->get_results(
-				$wpdb->prepare(
-					"SELECT * FROM {$wpdb->comments} 
-					WHERE comment_date < %s 
-					LIMIT %d OFFSET %d",
-					$cutoff_date,
-					$batch_size,
-					$offset
-				)
+			$args = array(
+				'date_query' => array(
+					array(
+						'before' => $cutoff_date,
+						'inclusive' => false,
+					),
+				),
+				'number' => $batch_size,
+				'offset' => $offset,
+				'orderby' => 'comment_date',
+				'order' => 'ASC',
 			);
 
+			$comment_query = new WP_Comment_Query();
+			$comments = $comment_query->query( $args );
+
 			foreach ( $comments as $comment ) {
-				$c++;
 				$update_data = array();
-				$update_format = array();
 
 				if ( $delete_email ) {
 					$update_data['comment_author_email'] = 'example@example.com';
-					$update_format[] = '%s';
 				}
 
 				if ( $delete_name ) {
 					$update_data['comment_author'] = esc_html__( 'Anonymous Guest', 'old-comment-cleaner' );
-					$update_format[] = '%s';
 				}
 
 				if ( $delete_url ) {
 					$update_data['comment_author_url'] = '';
-					$update_format[] = '%s';
 				}
 
 				if ( ! empty( $update_data ) ) {
-					$wpdb->update(
-						$wpdb->comments,
-						$update_data,
-						array( 'comment_ID' => $comment->comment_ID ),
-						$update_format,
-						array( '%d' )
-					);
+					$update_data['comment_ID'] = $comment->comment_ID;
+					wp_update_comment( $update_data );
 				}
 			}
 
@@ -192,7 +189,7 @@ class Old_Comment_Cleaner {
 		}
 
 		// Verify nonce
-		if ( ! isset( $_POST['occ_delete_now_nonce'] ) || ! wp_verify_nonce( $_POST['occ_delete_now_nonce'], 'occ_delete_now_action' ) ) {
+		if ( ! isset( $_POST['occ_delete_now_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['occ_delete_now_nonce'] ) ), 'occ_delete_now_action' ) ) {
 			wp_die( esc_html__( 'Nonce verification failed.', 'old-comment-cleaner' ) );
 		}
 
@@ -218,17 +215,18 @@ class Old_Comment_Cleaner {
 		// Check if the confirmation checkbox is checked
 		$notice_type = get_option( 'occ_confirm_delete', 0 ) ? 'info' : 'error';
 		$notice_message = get_option( 'occ_confirm_delete', 0 )
-			? esc_html__( 'Comments will be updated when the scheduled job runs.', 'old-comment-cleaner' ) 
-			: esc_html__( 'Comments will not be updated. Please check the confirmation checkbox to allow updates.', 'old-comment-cleaner' );
+			? __( 'Comments will be updated when the scheduled job runs.', 'old-comment-cleaner' )
+			: __( 'Comments will not be updated. Please check the confirmation checkbox to allow updates.', 'old-comment-cleaner' );
 
 		echo '<div class="notice notice-' . esc_attr( $notice_type ) . ' is-dismissible">';
-		echo '<p>' . $notice_message . '</p>';
+		echo '<p>' . esc_html( $notice_message ) . '</p>';
 		echo '</div>';
 
 		$timestamp = wp_next_scheduled( 'occ_delete_old_comments' );
 		if ( $timestamp ) {
-			$scheduled_time = date( 'Y-m-d H:i:s', $timestamp );
+			$scheduled_time = gmdate( 'Y-m-d H:i:s', $timestamp );
 			echo '<div class="notice notice-info is-dismissible">';
+			/* translators: %s: scheduled time */
 			echo '<p>' . sprintf( esc_html__( 'Next scheduled cleaning operation: %s', 'old-comment-cleaner' ), esc_html( $scheduled_time ) ) . '</p>';
 			echo '</div>';
 		}
