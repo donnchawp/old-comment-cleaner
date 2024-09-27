@@ -21,9 +21,9 @@ class Old_Comment_Cleaner {
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'add_settings_page' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
-		add_action( 'occ_delete_old_comments', array( $this, 'delete_old_comments' ) );
-		add_action( 'occ_delete_old_comments_now', array( $this, 'delete_old_comments' ) );
-		add_action( 'admin_post_occ_delete_now', array( $this, 'schedule_delete_now' ) );
+		add_action( 'old_comment_cleaner_delete_old_comments', array( $this, 'delete_old_comments' ) );
+		add_action( 'old_comment_cleaner_delete_old_comments_now', array( $this, 'delete_old_comments' ) );
+		add_action( 'admin_post_old_comment_cleaner_delete_now', array( $this, 'schedule_delete_now' ) );
 		add_action( 'admin_notices', array( $this, 'show_next_scheduled_delete' ) );
 		add_action( 'load-settings_page_old-comment-cleaner', array( $this, 'check_and_schedule_event' ) );
 		add_action( 'init', array( $this, 'load_textdomain' ) );
@@ -44,11 +44,11 @@ class Old_Comment_Cleaner {
 	}
 
 	public function register_settings() {
-		register_setting( 'occ_settings', 'occ_days_old' );
-		register_setting( 'occ_settings', 'occ_delete_email' );
-		register_setting( 'occ_settings', 'occ_delete_name' );
-		register_setting( 'occ_settings', 'occ_delete_url' );
-		register_setting( 'occ_settings', 'occ_confirm_delete' );
+		register_setting( 'old_comment_cleaner_settings', 'old_comment_cleaner_days_old' );
+		register_setting( 'old_comment_cleaner_settings', 'old_comment_cleaner_delete_email' );
+		register_setting( 'old_comment_cleaner_settings', 'old_comment_cleaner_delete_name' );
+		register_setting( 'old_comment_cleaner_settings', 'old_comment_cleaner_delete_url' );
+		register_setting( 'old_comment_cleaner_settings', 'old_comment_cleaner_confirm_delete' );
 	}
 
 	public function settings_page() {
@@ -63,35 +63,35 @@ class Old_Comment_Cleaner {
 				<?php esc_html_e( 'After you check the "Confirm Deletion" checkbox, the plugin will become destructive and start cleaning comments the next time the scheduled cleaning operation runs. This also applies to the "Delete Now" button.', 'old-comment-cleaner' ); ?>
 			</p>
 			<form method="post" action="options.php">
-				<?php settings_fields( 'occ_settings' ); ?>
-				<?php do_settings_sections( 'occ_settings' ); ?>
+				<?php settings_fields( 'old_comment_cleaner_settings' ); ?>
+				<?php do_settings_sections( 'old_comment_cleaner_settings' ); ?>
 				<table class="form-table">
 					<tr valign="top">
 						<th scope="row"><?php esc_html_e( 'Delete comments older than (days)', 'old-comment-cleaner' ); ?></th>
-						<td><input type="number" name="occ_days_old" value="<?php echo esc_attr( get_option( 'occ_days_old' ) ); ?>" /></td>
+						<td><input type="number" name="old_comment_cleaner_days_old" value="<?php echo esc_attr( get_option( 'old_comment_cleaner_days_old' ) ); ?>" /></td>
 					</tr>
 					<tr valign="top">
 						<th scope="row"><?php esc_html_e( 'Delete email addresses', 'old-comment-cleaner' ); ?></th>
-						<td><input type="checkbox" name="occ_delete_email" value="1" <?php checked( 1, get_option( 'occ_delete_email' ), true ); ?> /></td>
+						<td><input type="checkbox" name="old_comment_cleaner_delete_email" value="1" <?php checked( 1, get_option( 'old_comment_cleaner_delete_email' ), true ); ?> /></td>
 					</tr>
 					<tr valign="top">
 						<th scope="row"><?php esc_html_e( 'Delete names', 'old-comment-cleaner' ); ?></th>
-						<td><input type="checkbox" name="occ_delete_name" value="1" <?php checked( 1, get_option( 'occ_delete_name' ), true ); ?> /></td>
+						<td><input type="checkbox" name="old_comment_cleaner_delete_name" value="1" <?php checked( 1, get_option( 'old_comment_cleaner_delete_name' ), true ); ?> /></td>
 					</tr>
 					<tr valign="top">
 						<th scope="row"><?php esc_html_e( 'Delete website URLs', 'old-comment-cleaner' ); ?></th>
-						<td><input type="checkbox" name="occ_delete_url" value="1" <?php checked( 1, get_option( 'occ_delete_url' ), true ); ?> /></td>
+						<td><input type="checkbox" name="old_comment_cleaner_delete_url" value="1" <?php checked( 1, get_option( 'old_comment_cleaner_delete_url' ), true ); ?> /></td>
 					</tr>
 					<tr valign="top">
 						<th scope="row"><?php esc_html_e( 'Confirm Deletion', 'old-comment-cleaner' ); ?></th>
-						<td><input type="checkbox" name="occ_confirm_delete" value="1" <?php checked( 1, get_option( 'occ_confirm_delete' ), true ); ?> /></td>
+						<td><input type="checkbox" name="old_comment_cleaner_confirm_delete" value="1" <?php checked( 1, get_option( 'old_comment_cleaner_confirm_delete' ), true ); ?> /></td>
 					</tr>
 				</table>
 				<?php submit_button(); ?>
 			</form>
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
-				<input type="hidden" name="action" value="occ_delete_now">
-				<?php wp_nonce_field( 'occ_delete_now_action', 'occ_delete_now_nonce' ); ?>
+				<input type="hidden" name="action" value="old_comment_cleaner_delete_now">
+				<?php wp_nonce_field( 'old_comment_cleaner_delete_now_action', 'old_comment_cleaner_delete_now_nonce' ); ?>
 				<?php submit_button( esc_html__( 'Delete Now', 'old-comment-cleaner' ), 'secondary' ); ?>
 			</form>
 			<?php $this->display_affected_comments_count(); ?>
@@ -100,7 +100,7 @@ class Old_Comment_Cleaner {
 	}
 
 	private function display_affected_comments_count() {
-		$days_old = get_option( 'occ_days_old', 0 );
+		$days_old = get_option( 'old_comment_cleaner_days_old', 0 );
 		if ( $days_old > 0 ) {
 			$cutoff_date = gmdate( 'Y-m-d H:i:s', strtotime( "-$days_old days" ) );
 			$args = array(
@@ -126,14 +126,14 @@ class Old_Comment_Cleaner {
 		global $wpdb;
 
 		// Check if the confirmation checkbox is checked
-		if ( ! get_option( 'occ_confirm_delete', 0 ) ) {
+		if ( ! get_option( 'old_comment_cleaner_confirm_delete', 0 ) ) {
 			return;
 		}
 
-		$days_old = get_option( 'occ_days_old', 730 );
-		$delete_email = get_option( 'occ_delete_email', 0 );
-		$delete_name = get_option( 'occ_delete_name', 0 );
-		$delete_url = get_option( 'occ_delete_url', 0 );
+		$days_old = get_option( 'old_comment_cleaner_days_old', 730 );
+		$delete_email = get_option( 'old_comment_cleaner_delete_email', 0 );
+		$delete_name = get_option( 'old_comment_cleaner_delete_name', 0 );
+		$delete_url = get_option( 'old_comment_cleaner_delete_url', 0 );
 
 		// Check if all options are 0, if so, return early
 		if ( $delete_email == 0 && $delete_name == 0 && $delete_url == 0 ) {
@@ -191,15 +191,15 @@ class Old_Comment_Cleaner {
 		}
 
 		// Verify nonce
-		if ( ! isset( $_POST['occ_delete_now_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['occ_delete_now_nonce'] ) ), 'occ_delete_now_action' ) ) {
+		if ( ! isset( $_POST['old_comment_cleaner_delete_now_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['old_comment_cleaner_delete_now_nonce'] ) ), 'old_comment_cleaner_delete_now_action' ) ) {
 			wp_die( esc_html__( 'Nonce verification failed.', 'old-comment-cleaner' ) );
 		}
 
 		// Schedule a one-time event to delete old comments
-		if ( ! wp_next_scheduled( 'occ_delete_old_comments_now' ) ) {
-			wp_schedule_single_event( time(), 'occ_delete_old_comments_now' );
+		if ( ! wp_next_scheduled( 'old_comment_cleaner_delete_old_comments_now' ) ) {
+			wp_schedule_single_event( time(), 'old_comment_cleaner_delete_old_comments_now' );
 		}
-		set_transient( 'occ_delete_old_comments_now', true, 3 );
+		set_transient( 'old_comment_cleaner_delete_old_comments_now', true, 3 );
 		wp_redirect( admin_url( 'options-general.php?page=old-comment-cleaner' ) );
 		exit;
 	}
@@ -215,8 +215,8 @@ class Old_Comment_Cleaner {
 		}
 
 		// Check if the confirmation checkbox is checked
-		$notice_type = get_option( 'occ_confirm_delete', 0 ) ? 'info' : 'error';
-		$notice_message = get_option( 'occ_confirm_delete', 0 )
+		$notice_type = get_option( 'old_comment_cleaner_confirm_delete', 0 ) ? 'info' : 'error';
+		$notice_message = get_option( 'old_comment_cleaner_confirm_delete', 0 )
 			? __( 'Comments will be updated when the scheduled job runs.', 'old-comment-cleaner' )
 			: __( 'Comments will not be updated. Please check the confirmation checkbox to allow updates.', 'old-comment-cleaner' );
 
@@ -224,7 +224,7 @@ class Old_Comment_Cleaner {
 		echo '<p>' . esc_html( $notice_message ) . '</p>';
 		echo '</div>';
 
-		$timestamp = wp_next_scheduled( 'occ_delete_old_comments' );
+		$timestamp = wp_next_scheduled( 'old_comment_cleaner_delete_old_comments' );
 		if ( $timestamp ) {
 			$scheduled_time = gmdate( 'Y-m-d H:i:s', $timestamp );
 			echo '<div class="notice notice-info is-dismissible">';
@@ -234,7 +234,7 @@ class Old_Comment_Cleaner {
 		}
 
 		// Check if the 'scheduled' query parameter is set
-		if ( get_transient( 'occ_delete_old_comments_now' ) ) {
+		if ( get_transient( 'old_comment_cleaner_delete_old_comments_now' ) ) {
 			echo '<div class="notice notice-info is-dismissible">';
 			echo '<p>' . esc_html__( 'Old comments are being processed.', 'old-comment-cleaner' ) . '</p>';
 			echo '</div>';
@@ -242,36 +242,36 @@ class Old_Comment_Cleaner {
 	}
 
 	public function check_and_schedule_event() {
-		if ( ! wp_next_scheduled( 'occ_delete_old_comments' ) ) {
-			wp_schedule_event( time(), 'daily', 'occ_delete_old_comments' );
+		if ( ! wp_next_scheduled( 'old_comment_cleaner_delete_old_comments' ) ) {
+			wp_schedule_event( time(), 'daily', 'old_comment_cleaner_delete_old_comments' );
 			return;
 		}
 	}
 
 	public static function activate() {
-		if ( ! wp_next_scheduled( 'occ_delete_old_comments' ) ) {
-			wp_schedule_event( time(), 'daily', 'occ_delete_old_comments' );
+		if ( ! wp_next_scheduled( 'old_comment_cleaner_delete_old_comments' ) ) {
+			wp_schedule_event( time(), 'daily', 'old_comment_cleaner_delete_old_comments' );
 		}
 	}
 
 	public static function deactivate() {
-		wp_clear_scheduled_hook( 'occ_delete_old_comments' );
+		wp_clear_scheduled_hook( 'old_comment_cleaner_delete_old_comments' );
 
 		// Delete plugin options
-		delete_option( 'occ_days_old' );
-		delete_option( 'occ_delete_email' );
-		delete_option( 'occ_delete_name' );
-		delete_option( 'occ_delete_url' );
-		delete_option( 'occ_confirm_delete' );
+		delete_option( 'old_comment_cleaner_days_old' );
+		delete_option( 'old_comment_cleaner_delete_email' );
+		delete_option( 'old_comment_cleaner_delete_name' );
+		delete_option( 'old_comment_cleaner_delete_url' );
+		delete_option( 'old_comment_cleaner_confirm_delete' );
 	}
 
 	public static function uninstall() {
 		// Delete plugin options
-		delete_option( 'occ_days_old' );
-		delete_option( 'occ_delete_email' );
-		delete_option( 'occ_delete_name' );
-		delete_option( 'occ_delete_url' );
-		delete_option( 'occ_confirm_delete' );
+		delete_option( 'old_comment_cleaner_days_old' );
+		delete_option( 'old_comment_cleaner_delete_email' );
+		delete_option( 'old_comment_cleaner_delete_name' );
+		delete_option( 'old_comment_cleaner_delete_url' );
+		delete_option( 'old_comment_cleaner_confirm_delete' );
 	}
 }
 
