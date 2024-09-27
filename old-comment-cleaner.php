@@ -44,11 +44,55 @@ class Old_Comment_Cleaner {
 	}
 
 	public function register_settings() {
-		register_setting( 'old_comment_cleaner_settings', 'old_comment_cleaner_days_old' );
-		register_setting( 'old_comment_cleaner_settings', 'old_comment_cleaner_delete_email' );
-		register_setting( 'old_comment_cleaner_settings', 'old_comment_cleaner_delete_name' );
-		register_setting( 'old_comment_cleaner_settings', 'old_comment_cleaner_delete_url' );
-		register_setting( 'old_comment_cleaner_settings', 'old_comment_cleaner_confirm_delete' );
+		register_setting(
+			'old_comment_cleaner_settings',
+			'old_comment_cleaner_days_old',
+			array(
+				'sanitize_callback' => array($this, 'sanitize_days_old'),
+				'default' => 730
+			)
+		);
+		register_setting(
+			'old_comment_cleaner_settings',
+			'old_comment_cleaner_delete_email',
+			array(
+				'sanitize_callback' => array($this, 'sanitize_checkbox'),
+				'default' => 0
+			)
+		);
+		register_setting(
+			'old_comment_cleaner_settings',
+			'old_comment_cleaner_delete_name',
+			array(
+				'sanitize_callback' => array($this, 'sanitize_checkbox'),
+				'default' => 0
+			)
+		);
+		register_setting(
+			'old_comment_cleaner_settings',
+			'old_comment_cleaner_delete_url',
+			array(
+				'sanitize_callback' => array($this, 'sanitize_checkbox'),
+				'default' => 0
+			)
+		);
+		register_setting(
+			'old_comment_cleaner_settings',
+			'old_comment_cleaner_confirm_delete',
+			array(
+				'sanitize_callback' => array($this, 'sanitize_checkbox'),
+				'default' => 0
+			)
+		);
+	}
+
+	public function sanitize_days_old($input) {
+		$input = absint($input);
+		return ($input > 0) ? $input : 730; // Default to 730 if input is 0 or negative
+	}
+
+	public function sanitize_checkbox($input) {
+		return ($input == 1) ? 1 : 0;
 	}
 
 	public function settings_page() {
