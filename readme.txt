@@ -7,11 +7,11 @@ Stable tag: 1.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Deletes old comment data based on user-defined settings.
+Clean up old comment data based on user-defined settings.
 
 == Description ==
 
-Old Comment Cleaner is a WordPress plugin that allows you to delete old comment data based on user-defined settings. You can specify the age of comments to delete and choose to delete email addresses, names, and website URLs associated with the comments.
+Old Comment Cleaner is a WordPress plugin that allows you to clean old comment data based on user-defined settings. You can specify the age of comments to clean whih will replace email addresses and names, and delete author URLs associated with the comments.
 
 == Installation ==
 
@@ -23,11 +23,11 @@ Old Comment Cleaner is a WordPress plugin that allows you to delete old comment 
 
 = How do I configure the plugin? =
 
-After activating the plugin, go to Settings -> Old Comment Cleaner to configure the settings. You can specify the age of comments to delete and choose to delete email addresses, names, and website URLs associated with the comments.
+After activating the plugin, go to Settings -> Old Comment Cleaner to configure the settings. You can specify the age of comments to clean and choose to clean email addresses, names, and website URLs associated with the comments.
 
-= How do I delete old comments immediately? =
+= How do I clean old comments immediately? =
 
-You can delete old comments immediately by clicking the "Delete Now" button on the settings page.
+You can clean old comments immediately by clicking the "Clean Now" button on the settings page.
 
 == Changelog ==
 
