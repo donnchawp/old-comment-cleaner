@@ -106,30 +106,38 @@ class Old_Comment_Cleaner_Plugin {
 				<?php esc_html_e( 'Please be sure to backup your comments before running the cleanup as this cannot be undone.', 'old-comment-cleaner' ); ?>
 			</p>
 			<p>
-				<?php esc_html_e( 'After you check the "Confirm Deletion" checkbox, the plugin will become destructive and start cleaning comments the next time the scheduled cleaning operation runs. This also applies to the "Delete Now" button.', 'old-comment-cleaner' ); ?>
+				<?php esc_html_e( 'After you check the "Confirm Cleaning" checkbox, the plugin will become destructive and start cleaning comments the next time the scheduled cleaning operation runs. This also applies to the "Clean Now" button.', 'old-comment-cleaner' ); ?>
+			</p>
+			<p>
+				<?php esc_html_e( 'When comments are cleaned:', 'old-comment-cleaner' ); ?>
+				<ol>
+					<li><?php esc_html_e( 'Email addresses will be replaced with "example@example.com".', 'old-comment-cleaner' ); ?></li>
+					<li><?php esc_html_e( 'Names will be replaced with "Anonymous Guest".', 'old-comment-cleaner' ); ?></li>
+					<li><?php esc_html_e( 'Website URLs will be replaced with an empty string.', 'old-comment-cleaner' ); ?></li>
+				</ol>
 			</p>
 			<form method="post" action="options.php">
 				<?php settings_fields( 'old_comment_cleaner_settings' ); ?>
 				<?php do_settings_sections( 'old_comment_cleaner_settings' ); ?>
 				<table class="form-table">
 					<tr valign="top">
-						<th scope="row"><?php esc_html_e( 'Delete comments older than (days)', 'old-comment-cleaner' ); ?></th>
+						<th scope="row"><?php esc_html_e( 'Clean comments older than (days)', 'old-comment-cleaner' ); ?></th>
 						<td><input type="number" name="old_comment_cleaner_days_old" value="<?php echo esc_attr( get_option( 'old_comment_cleaner_days_old', self::DAYS_OLD_DEFAULT ) ); ?>" /></td>
 					</tr>
 					<tr valign="top">
-						<th scope="row"><?php esc_html_e( 'Delete email addresses', 'old-comment-cleaner' ); ?></th>
+						<th scope="row"><?php esc_html_e( 'Clean email addresses', 'old-comment-cleaner' ); ?></th>
 						<td><input type="checkbox" name="old_comment_cleaner_delete_email" value="1" <?php checked( 1, get_option( 'old_comment_cleaner_delete_email' ), true ); ?> /></td>
 					</tr>
 					<tr valign="top">
-						<th scope="row"><?php esc_html_e( 'Delete names', 'old-comment-cleaner' ); ?></th>
+						<th scope="row"><?php esc_html_e( 'Clean names', 'old-comment-cleaner' ); ?></th>
 						<td><input type="checkbox" name="old_comment_cleaner_delete_name" value="1" <?php checked( 1, get_option( 'old_comment_cleaner_delete_name' ), true ); ?> /></td>
 					</tr>
 					<tr valign="top">
-						<th scope="row"><?php esc_html_e( 'Delete website URLs', 'old-comment-cleaner' ); ?></th>
+						<th scope="row"><?php esc_html_e( 'Clean website URLs', 'old-comment-cleaner' ); ?></th>
 						<td><input type="checkbox" name="old_comment_cleaner_delete_url" value="1" <?php checked( 1, get_option( 'old_comment_cleaner_delete_url' ), true ); ?> /></td>
 					</tr>
 					<tr valign="top">
-						<th scope="row"><?php esc_html_e( 'Confirm Deletion', 'old-comment-cleaner' ); ?></th>
+						<th scope="row"><?php esc_html_e( 'Confirm Cleaning', 'old-comment-cleaner' ); ?></th>
 						<td><input type="checkbox" name="old_comment_cleaner_confirm_delete" value="1" <?php checked( 1, get_option( 'old_comment_cleaner_confirm_delete' ), true ); ?> /></td>
 					</tr>
 				</table>
