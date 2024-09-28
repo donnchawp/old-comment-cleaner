@@ -18,6 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Old_Comment_Cleaner {
 
+	const DAYS_OLD_DEFAULT = 730;
+
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'add_settings_page' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
@@ -49,7 +51,7 @@ class Old_Comment_Cleaner {
 			'old_comment_cleaner_days_old',
 			array(
 				'sanitize_callback' => array($this, 'sanitize_days_old'),
-				'default' => 730
+				'default' => self::DAYS_OLD_DEFAULT
 			)
 		);
 		register_setting(
@@ -88,7 +90,7 @@ class Old_Comment_Cleaner {
 
 	public function sanitize_days_old($input) {
 		$input = absint($input);
-		return ($input > 0) ? $input : 730; // Default to 730 if input is 0 or negative
+		return ($input > 0) ? $input : self::DAYS_OLD_DEFAULT;
 	}
 
 	public function sanitize_checkbox($input) {
@@ -112,7 +114,7 @@ class Old_Comment_Cleaner {
 				<table class="form-table">
 					<tr valign="top">
 						<th scope="row"><?php esc_html_e( 'Delete comments older than (days)', 'old-comment-cleaner' ); ?></th>
-						<td><input type="number" name="old_comment_cleaner_days_old" value="<?php echo esc_attr( get_option( 'old_comment_cleaner_days_old' ) ); ?>" /></td>
+						<td><input type="number" name="old_comment_cleaner_days_old" value="<?php echo esc_attr( get_option( 'old_comment_cleaner_days_old', self::DAYS_OLD_DEFAULT ) ); ?>" /></td>
 					</tr>
 					<tr valign="top">
 						<th scope="row"><?php esc_html_e( 'Delete email addresses', 'old-comment-cleaner' ); ?></th>
