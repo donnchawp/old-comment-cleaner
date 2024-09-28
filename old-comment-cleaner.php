@@ -31,7 +31,7 @@ class Old_Comment_Cleaner {
 		add_action( 'init', array( $this, 'load_textdomain' ) );
 	}
 
-	public function load_textdomain(){
+	public function load_textdomain() {
 		load_plugin_textdomain( 'old-comment-cleaner', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	}
 
@@ -50,51 +50,51 @@ class Old_Comment_Cleaner {
 			'old_comment_cleaner_settings',
 			'old_comment_cleaner_days_old',
 			array(
-				'sanitize_callback' => array($this, 'sanitize_days_old'),
-				'default' => self::DAYS_OLD_DEFAULT
+				'sanitize_callback' => array( $this, 'sanitize_days_old' ),
+				'default'           => self::DAYS_OLD_DEFAULT,
 			)
 		);
 		register_setting(
 			'old_comment_cleaner_settings',
 			'old_comment_cleaner_delete_email',
 			array(
-				'sanitize_callback' => array($this, 'sanitize_checkbox'),
-				'default' => 0
+				'sanitize_callback' => array( $this, 'sanitize_checkbox' ),
+				'default'           => 0,
 			)
 		);
 		register_setting(
 			'old_comment_cleaner_settings',
 			'old_comment_cleaner_delete_name',
 			array(
-				'sanitize_callback' => array($this, 'sanitize_checkbox'),
-				'default' => 0
+				'sanitize_callback' => array( $this, 'sanitize_checkbox' ),
+				'default'           => 0,
 			)
 		);
 		register_setting(
 			'old_comment_cleaner_settings',
 			'old_comment_cleaner_delete_url',
 			array(
-				'sanitize_callback' => array($this, 'sanitize_checkbox'),
-				'default' => 0
+				'sanitize_callback' => array( $this, 'sanitize_checkbox' ),
+				'default'           => 0,
 			)
 		);
 		register_setting(
 			'old_comment_cleaner_settings',
 			'old_comment_cleaner_confirm_delete',
 			array(
-				'sanitize_callback' => array($this, 'sanitize_checkbox'),
-				'default' => 0
+				'sanitize_callback' => array( $this, 'sanitize_checkbox' ),
+				'default'           => 0,
 			)
 		);
 	}
 
-	public function sanitize_days_old($input) {
-		$input = absint($input);
-		return ($input > 0) ? $input : self::DAYS_OLD_DEFAULT;
+	public function sanitize_days_old( $input ) {
+		$input = absint( $input );
+		return ( $input > 0 ) ? $input : self::DAYS_OLD_DEFAULT;
 	}
 
-	public function sanitize_checkbox($input) {
-		return ($input == 1) ? 1 : 0;
+	public function sanitize_checkbox( $input ) {
+		return ( 1 == $input ) ? 1 : 0;
 	}
 
 	public function settings_page() {
@@ -149,19 +149,19 @@ class Old_Comment_Cleaner {
 		$days_old = get_option( 'old_comment_cleaner_days_old', 0 );
 		if ( $days_old > 0 ) {
 			$cutoff_date = gmdate( 'Y-m-d H:i:s', strtotime( "-$days_old days" ) );
-			$args = array(
-				'date_query' => array(
+			$args        = array(
+				'date_query'          => array(
 					array(
-						'before' => $cutoff_date,
+						'before'    => $cutoff_date,
 						'inclusive' => false,
 					),
 				),
 				'author_email__not_in' => array( 'example@example.com' ),
-				'count' => true,
+				'count'                => true,
 			);
 
 			$comment_query = new WP_Comment_Query();
-			$count = $comment_query->query( $args );
+			$count         = $comment_query->query( $args );
 
 			/* translators: %d: number of comments to be updated */
 			echo '<p>' . sprintf( esc_html__( 'Number of comments to be updated: %d', 'old-comment-cleaner' ), esc_html( $count ) ) . '</p>';
@@ -176,35 +176,35 @@ class Old_Comment_Cleaner {
 			return;
 		}
 
-		$days_old = get_option( 'old_comment_cleaner_days_old', 730 );
+		$days_old     = get_option( 'old_comment_cleaner_days_old', 730 );
 		$delete_email = get_option( 'old_comment_cleaner_delete_email', 0 );
-		$delete_name = get_option( 'old_comment_cleaner_delete_name', 0 );
-		$delete_url = get_option( 'old_comment_cleaner_delete_url', 0 );
+		$delete_name  = get_option( 'old_comment_cleaner_delete_name', 0 );
+		$delete_url   = get_option( 'old_comment_cleaner_delete_url', 0 );
 
 		// Check if all options are 0, if so, return early
-		if ( $delete_email == 0 && $delete_name == 0 && $delete_url == 0 ) {
+		if ( 0 == $delete_email && 0 == $delete_name && 0 == $delete_url ) {
 			return;
 		}
 
 		$cutoff_date = gmdate( 'Y-m-d H:i:s', strtotime( "-$days_old days" ) );
-		$batch_size = 100;
-		$offset = 0;
+		$batch_size  = 100;
+		$offset      = 0;
 		do {
 			$args = array(
 				'date_query' => array(
 					array(
-						'before' => $cutoff_date,
+						'before'    => $cutoff_date,
 						'inclusive' => false,
 					),
 				),
-				'number' => $batch_size,
-				'offset' => $offset,
-				'orderby' => 'comment_date',
-				'order' => 'ASC',
+				'number'     => $batch_size,
+				'offset'     => $offset,
+				'orderby'    => 'comment_date',
+				'order'      => 'ASC',
 			);
 
 			$comment_query = new WP_Comment_Query();
-			$comments = $comment_query->query( $args );
+			$comments      = $comment_query->query( $args );
 
 			foreach ( $comments as $comment ) {
 				$update_data = array();
