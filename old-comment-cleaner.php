@@ -138,7 +138,7 @@ class Old_Comment_Cleaner {
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 				<input type="hidden" name="action" value="old_comment_cleaner_delete_now">
 				<?php wp_nonce_field( 'old_comment_cleaner_delete_now_action', 'old_comment_cleaner_delete_now_nonce' ); ?>
-				<?php submit_button( esc_html__( 'Delete Now', 'old-comment-cleaner' ), 'secondary' ); ?>
+				<?php submit_button( esc_html__( 'Clean Now', 'old-comment-cleaner' ), 'secondary' ); ?>
 			</form>
 			<?php $this->display_affected_comments_count(); ?>
 		</div>
