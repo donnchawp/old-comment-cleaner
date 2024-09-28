@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class Old_Comment_Cleaner {
+class Old_Comment_Cleaner_Plugin {
 
 	const DAYS_OLD_DEFAULT = 730;
 
@@ -321,8 +321,8 @@ class Old_Comment_Cleaner {
 	}
 }
 
-$old_comment_cleaner = new Old_Comment_Cleaner();
+$old_comment_cleaner = new Old_Comment_Cleaner_Plugin();
 
-register_activation_hook( __FILE__, array( 'Old_Comment_Cleaner', 'activate' ) );
-register_deactivation_hook( __FILE__, array( 'Old_Comment_Cleaner', 'deactivate' ) );
-register_uninstall_hook( __FILE__, array( 'Old_Comment_Cleaner', 'uninstall' ) );
+register_activation_hook( __FILE__, array( 'Old_Comment_Cleaner_Plugin', 'activate' ) );
+register_deactivation_hook( __FILE__, array( 'Old_Comment_Cleaner_Plugin', 'deactivate' ) );
+register_uninstall_hook( __FILE__, array( 'Old_Comment_Cleaner_Plugin', 'uninstall' ) );
