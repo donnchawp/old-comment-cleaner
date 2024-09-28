@@ -1,118 +1,127 @@
-#, fuzzy
+# Copyright (C) 2024 Donncha O Caoimh
+# This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Old Comment Cleaner\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-01 18:00+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Project-Id-Version: Old Comment Cleaner 1.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/old-comment-cleaner\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: \n"
-"Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.11; wp-6.6.1\n"
-"X-Domain: old-comment-cleaner"
+"POT-Creation-Date: 2024-09-28T10:21:24+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: old-comment-cleaner\n"
 
-#: old-comment-cleaner.php:56
-msgid ""
-"After you check the \"Confirm Deletion\" checkbox, the plugin will become "
-"destructive and start cleaning comments the next time the scheduled cleaning "
-"operation runs. This also applies to the \"Delete Now\" button."
+#. Plugin Name of the plugin
+#: old-comment-cleaner.php
+#: old-comment-cleaner.php:41
+msgid "Old Comment Cleaner"
 msgstr ""
 
-#: old-comment-cleaner.php:108 old-comment-cleaner.php:147
-#: old-comment-cleaner.php:164
-msgid "Anonymous Guest"
-msgstr ""
-
-#: old-comment-cleaner.php:220
-msgid "Comments will be updated when the scheduled job runs."
-msgstr ""
-
-#: old-comment-cleaner.php:221
-msgid ""
-"Comments will not be updated. Please check the confirmation checkbox to "
-"allow updates."
-msgstr ""
-
-#: old-comment-cleaner.php:79
-msgid "Confirm Deletion"
-msgstr ""
-
-#: old-comment-cleaner.php:63
-msgid "Delete comments older than (days)"
-msgstr ""
-
-#: old-comment-cleaner.php:67
-msgid "Delete email addresses"
-msgstr ""
-
-#: old-comment-cleaner.php:71
-msgid "Delete names"
-msgstr ""
-
-#: old-comment-cleaner.php:88
-msgid "Delete Now"
-msgstr ""
-
-#: old-comment-cleaner.php:75
-msgid "Delete website URLs"
+#. Plugin URI of the plugin
+#: old-comment-cleaner.php
+msgid "https://odd.blog/old-comment-cleaner/"
 msgstr ""
 
 #. Description of the plugin
+#: old-comment-cleaner.php
 msgid "Deletes old comment data based on user-defined settings."
 msgstr ""
 
 #. Author of the plugin
+#: old-comment-cleaner.php
 msgid "Donncha O Caoimh"
 msgstr ""
 
-#. URI of the plugin
-msgid "https://odd.blog/old-comment-cleaner/"
-msgstr ""
-
-#: old-comment-cleaner.php:231
-#, php-format
-msgid "Next scheduled cleaning operation: %s"
-msgstr ""
-
-#: old-comment-cleaner.php:195
-msgid "Nonce verification failed."
-msgstr ""
-
-#: old-comment-cleaner.php:111
-msgid "Number of comments to be updated: %d"
-msgstr ""
-
-#. Name of the plugin
-#: old-comment-cleaner.php:32
-msgid "Old Comment Cleaner"
-msgstr ""
-
-#: old-comment-cleaner.php:31 old-comment-cleaner.php:50
+#: old-comment-cleaner.php:40
+#: old-comment-cleaner.php:103
 msgid "Old Comment Cleaner Settings"
 msgstr ""
 
-#: old-comment-cleaner.php:238
-msgid "Old comments are being processed."
+#: old-comment-cleaner.php:105
+msgid "This plugin will clean up comments older than the specified number of days. It will update email addresses, names, and website URLs in those comments. It will not delete them."
 msgstr ""
 
-#: old-comment-cleaner.php:53
-msgid ""
-"Please be sure to backup your comments before running the cleanup as this "
-"cannot be undone."
+#: old-comment-cleaner.php:106
+msgid "Please be sure to backup your comments before running the cleanup as this cannot be undone."
 msgstr ""
 
-#: old-comment-cleaner.php:52
-msgid ""
-"This plugin will clean up comments older than the specified number of days. "
-"It will update email addresses, names, and website URLs in those comments. "
-"It will not delete them."
+#: old-comment-cleaner.php:109
+msgid "After you check the \"Confirm Cleaning\" checkbox, the plugin will become destructive and start cleaning comments the next time the scheduled cleaning operation runs. This also applies to the \"Clean Now\" button."
 msgstr ""
 
-#: old-comment-cleaner.php:190
+#: old-comment-cleaner.php:112
+msgid "When comments are cleaned:"
+msgstr ""
+
+#: old-comment-cleaner.php:114
+msgid "Email addresses will be replaced with \"example@example.com\"."
+msgstr ""
+
+#: old-comment-cleaner.php:115
+msgid "Names will be replaced with \"Anonymous Guest\"."
+msgstr ""
+
+#: old-comment-cleaner.php:116
+msgid "Website URLs will be replaced with an empty string."
+msgstr ""
+
+#: old-comment-cleaner.php:124
+msgid "Clean comments older than (days)"
+msgstr ""
+
+#: old-comment-cleaner.php:128
+msgid "Clean email addresses"
+msgstr ""
+
+#: old-comment-cleaner.php:132
+msgid "Clean names"
+msgstr ""
+
+#: old-comment-cleaner.php:136
+msgid "Clean website URLs"
+msgstr ""
+
+#: old-comment-cleaner.php:140
+msgid "Confirm Cleaning"
+msgstr ""
+
+#: old-comment-cleaner.php:149
+msgid "Clean Now"
+msgstr ""
+
+#. translators: %d: number of comments to be updated
+#: old-comment-cleaner.php:174
+msgid "Comments older than %d days: %d"
+msgstr ""
+
+#: old-comment-cleaner.php:224
+msgid "Anonymous Guest"
+msgstr ""
+
+#: old-comment-cleaner.php:243
 msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: old-comment-cleaner.php:248
+msgid "Nonce verification failed."
+msgstr ""
+
+#: old-comment-cleaner.php:273
+msgid "Comments will be updated when the scheduled job runs."
+msgstr ""
+
+#: old-comment-cleaner.php:274
+msgid "Comments will not be updated. Please check the confirmation checkbox to allow updates."
+msgstr ""
+
+#. translators: %s: scheduled time
+#: old-comment-cleaner.php:285
+msgid "Next scheduled cleaning operation: %s"
+msgstr ""
+
+#: old-comment-cleaner.php:292
+msgid "Old comments are being processed."
 msgstr ""
