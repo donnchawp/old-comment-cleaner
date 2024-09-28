@@ -13,6 +13,12 @@ Clean up old comment data based on user-defined settings.
 
 Old Comment Cleaner is a WordPress plugin that allows you to clean old comment data based on user-defined settings. You can specify the age of comments to clean whih will replace email addresses and names, and delete author URLs associated with the comments.
 
+The "Confirm Cleaning" checkbox must be checked before any destructive actions are taken. When comments are cleaned, they will have any or all of the following done:
+
+* Email addresses will be replaced with "example@example.com".
+* Names will be replaced with "Anonymous Guest".
+* Website URLs will be replaced with an empty string.
+
 == Installation ==
 
 1. Upload the `old-comment-cleaner` folder to the `/wp-content/plugins/` directory.
