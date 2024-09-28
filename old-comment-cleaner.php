@@ -164,7 +164,6 @@ class Old_Comment_Cleaner_Plugin {
 						'inclusive' => false,
 					),
 				),
-				'author_email__not_in' => array( 'example@example.com' ),
 				'count'                => true,
 			);
 
@@ -172,7 +171,7 @@ class Old_Comment_Cleaner_Plugin {
 			$count         = $comment_query->query( $args );
 
 			/* translators: %d: number of comments to be updated */
-			echo '<p>' . sprintf( esc_html__( 'Number of comments to be updated: %d', 'old-comment-cleaner' ), esc_html( $count ) ) . '</p>';
+			echo '<p>' . sprintf( esc_html__( 'Comments older than %d days: %d', 'old-comment-cleaner' ), esc_html( $days_old ), esc_html( $count ) ) . '</p>';
 		}
 	}
 
